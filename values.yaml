@@ -1,0 +1,39 @@
+# Default values for kibana-helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Namespace to assoicate all objects use by kibana
+namespace: elasticsearch
+
+# Deployment and Service name for kibana
+name: kibana
+
+# IP address to listen for inbound traffic
+host: 0.0.0.0
+
+# URL to elasticsearch
+es_url: https://elasticsearch.elasticsearch.svc.cluster.local:9200 
+
+# Whether to enable ssl for communication to Kibana
+ssl_mode: none
+
+# Whether to allow an anonymous use to login to Kibana
+allow_anonymous: true
+
+# Number of Kibana replicas to run within cluster
+replica_count: 1
+
+# Location of Kibana image
+kibana_image: quay.io/snsumner75/kibana
+
+# Kibana image tag
+image_tag: 5.3.2
+
+# Pull policy for image
+pull_policy: Always
+
+# Internal port number for Kibana service
+internal_port: 5601
+
+# External port number for Kibana service
+external_port: 5601

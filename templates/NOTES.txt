@@ -1,0 +1,28 @@
+1. Wait for Kibana to fully startup it take roughly five minutes.
+2. Get Kibana pod name executing: 'kubectl get pods --namespace elasticsearch'
+3. Next grep logs of Kibana pod for server running message by executing: 'kubectl logs -n elasticsearch <kibana pod name> | grep 'Server running at''
+4. To access Kibana from browser obtain the selflink by executing: 'kubectl get svc -n {{ .Values.namespace }} {{ .Values.name }} -o yaml | grep selfLink'
+5. Execute the following command: 'kubectl proxy' to enable proxy on local desktop 
+6. Replace the prefix of selfLink '/api/v1/' with 'http://localhost:8001/api/v1/proxy' (e.g. http://localhost:8001/api/v1/proxy/namespace/elasticsearch/services/kibana)
+
+Example:
+
+$ kubectl get pods --namespace elasticsearch
+NAME                                      READY     STATUS    RESTARTS   AGE
+elasticsearch-operator-4140135412-xn2z5   1/1       Running   0          6m
+es-client-1729455616-3xg0k                1/1       Running   0          4m
+es-client-1729455616-79pwk                1/1       Running   0          4m
+es-data-us-west-2a-0                      1/1       Running   0          4m
+es-data-us-west-2b-0                      1/1       Running   0          4m
+es-master-857564711-jj7r8                 1/1       Running   0          4m
+kibana-1090794625-3sx05                   1/1       Running   0          3m
+
+$ kubectl logs -n elasticsearch kibana-1090794625-3sx05 | grep 'Server running at'
+{"type":"log","@timestamp":"2017-05-23T23:23:13Z","tags":["listening","info"],"pid":12,"message":"Server running at http://0.0.0.0:5601"}
+
+$ kubectl get svc -n elasticsearch kibana -o yaml | grep selfLink
+  selfLink: /api/v1/namespaces/elasticsearch/services/kibana
+
+Within chrome use URL: http://localhost:8001/api/v1/proxy/namespace/elasticsearch/services/kibana
+
+NOTE: This is assuming you are using elasticsearch for namespace and kibana for service name

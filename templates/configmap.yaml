@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+data:
+  kibana.yml: |
+    ---
+    server.name: {{ .Values.name }}
+    server.host: "{{ .Values.host }}"
+    server.basePath: "/api/v1/proxy/namespaces/{{ .Values.namespace }}/services/{{ .Values.name }}"
+    elasticsearch.url: "{{ .Values.es_url }}"
+    elasticsearch.ssl.verificationMode: {{ .Values.ssl_mode }}
+    status.allowAnonymous: {{ .Values.allow_anonymous }}

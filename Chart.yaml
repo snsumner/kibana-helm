@@ -1,0 +1,9 @@
+name: kibana-helm
+version: 0.3.0
+description: A Helm chart based off Chance Zibolski Kibana deployment that works in conjunction with the elasticsearch-operator-helm
+home: https://www.elastic.co/products/kibana
+sources:
+  - https://gist.github.com/chancez/85b905cc5bfccbc6515a52738a9e2f25
+maintainers:
+  - name: Scott Sumner
+    email: scott@coreos.com
